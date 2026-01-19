@@ -3,89 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logic101 | System Terminal</title>
+    <title>Logic101 | Playground</title>
     <style>
         :root {
             --bg: #000000;
             --accent: #ab9ff2;
-            --dim: #555;
+            --border: #1a1a1a;
             --font: "SF Mono", "Fira Code", monospace;
+            --display-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
         }
         body {
             margin: 0;
             background-color: #050505;
-            /* Brightened the scan-line texture */
-            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(255, 255, 255, 0.03) 50%);
-            background-size: 100% 4px;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(171, 159, 242, 0.05) 0%, transparent 80%);
             color: #fff;
             font-family: var(--font);
             display: flex;
             flex-direction: column;
             height: 100vh;
+            align-items: center;
             overflow: hidden;
         }
-        nav {
-            padding: 25px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #1a1a1a;
-            background: #000;
+        nav { 
+            width: 100%;
+            max-width: 1100px;
+            padding: 40px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-sizing: border-box;
         }
-        .back-link { color: var(--dim); text-decoration: none; font-size: 12px; font-weight: 800; letter-spacing: 2px; }
-        .terminal-container {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
+        .playground-title { 
+            font-family: var(--display-font);
+            color: var(--accent); 
+            font-weight: 900; 
+            letter-spacing: 3px; 
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .home-btn { 
+            font-family: var(--display-font);
+            padding: 14px 28px; 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            color: #fff; 
+            text-decoration: none; 
+            font-size: 12px; 
+            font-weight: 800; 
+            letter-spacing: 2px;
+            background: #000;
+            text-transform: uppercase;
+        }
+        .terminal-window { 
+            width: 90%;
+            max-width: 900px;
+            flex: 1; 
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            margin-bottom: 40px;
             display: flex;
             flex-direction: column;
-            gap: 15px; /* Increased gap */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .log-entry { 
-            font-size: 15px; 
-            line-height: 1.8; /* Fixed compacted text */
-            letter-spacing: 1px; 
-        }
-        .timestamp { color: var(--dim); margin-right: 15px; }
-        .success { color: #1ed760; }
-        .warning { color: var(--accent); }
-        .input-area {
-            background: #000;
-            padding: 30px 40px;
-            border-top: 1px solid #1a1a1a;
+        .window-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
             display: flex;
-            align-items: center;
+            gap: 10px;
         }
-        .prompt { color: var(--accent); margin-right: 20px; font-weight: 900; }
-        input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-family: var(--font);
-            font-size: 16px;
-            width: 100%;
-            outline: none;
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #333; }
+        .output-area { 
+            flex: 1; 
+            padding: 30px; 
+            overflow-y: auto; 
+            font-size: 15px; 
+            line-height: 1.8; 
+            letter-spacing: 0.5px;
         }
+        .input-line { 
+            padding: 25px 30px; 
+            border-top: 1px solid var(--border); 
+            display: flex; 
+            align-items: center; 
+        }
+        .prompt { color: var(--accent); margin-right: 15px; font-weight: 900; }
+        input { 
+            background: transparent; 
+            border: none; 
+            color: #fff; 
+            font-family: var(--font); 
+            font-size: 16px; 
+            width: 100%; 
+            outline: none; 
+        }
+        .help-text { color: #555; font-style: italic; margin-bottom: 20px; }
     </style>
 </head>
 <body>
     <nav>
-        <div style="color: var(--accent); font-weight: 900; letter-spacing: 2px;">SYSTEM_TERMINAL_V1</div>
-        <a href="index.html" class="back-link">EXIT_TO_HOME</a>
+        <div class="playground-title">Logic_Lab // v1.0</div>
+        <a href="index.html" class="home-btn">← GO BACK HOME</a>
     </nav>
-    <div class="terminal-container" id="logs">
-        <div class="log-entry">
-            <span class="timestamp">[00:00:01]</span>
-            <span class="success">CORE_LOGIC_LOADED: SUCCESS</span>
+
+    <div class="terminal-window">
+        <div class="window-header">
+            <div class="dot" style="background: #ff5f56;"></div>
+            <div class="dot" style="background: #ffbd2e;"></div>
+            <div class="dot" style="background: #27c93f;"></div>
         </div>
-        <div class="log-entry">
-            <span class="timestamp">[00:00:02]</span>
-            <span>SYNCING WITH 35,000 ACTIVE NODES...</span>
+        <div class="output-area" id="output">
+            <div class="help-text">Welcome to the Playground. Try commands like: "hello", "theme", or "unlock"</div>
+            <div style="color: var(--accent); font-weight: 800;">SYSTEM READY ></div>
+        </div>
+        <div class="input-line">
+            <span class="prompt">player:~$</span>
+            <input type="text" id="userInput" autofocus placeholder="Type something...">
         </div>
     </div>
-    <div class="input-area">
-        <span class="prompt">admin@logic101:~$</span>
-        <input type="text" id="cmdInput" placeholder="Initialize command..." autofocus>
-    </div>
+
+    <script>
+        const input = document.getElementById('userInput');
+        const output = document.getElementById('output');
+
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const cmd = this.value.toLowerCase().trim();
+                const line = document.createElement('div');
+                line.style.marginBottom = "10px";
+                
+                if (cmd === 'hello') {
+                    line.innerHTML = `<span style="color:#ab9ff2;">AI:</span> Yo! Welcome to the Logic101 sandbox. Ready to build?`;
+                } else if (cmd === 'theme') {
+                    line.innerHTML = `<span style="color:#ab9ff2;">SYSTEM:</span> Deep Purple mode remains the primary protocol.`;
+                } else if (cmd === 'unlock') {
+                    line.innerHTML = `<span style="color:#ffbd2e;">ALERT:</span> Head over to the Syllabus to start your journey.`;
+                } else {
+                    line.innerHTML = `<span style="color:#444;">> ${this.value}</span>`;
+                }
+
+                output.appendChild(line);
+                this.value = '';
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+    </script>
 </body>
 </html>
