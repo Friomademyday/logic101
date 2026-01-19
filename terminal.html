@@ -13,10 +13,12 @@
             --dim: #444;
             --font: "SF Mono", "Fira Code", monospace;
         }
-
         body {
             margin: 0;
-            background-color: var(--bg);
+            background-color: #000;
+            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                              linear-gradient(90deg, rgba(171, 159, 242, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 3px 100%;
             color: var(--text);
             font-family: var(--font);
             display: flex;
@@ -24,52 +26,42 @@
             height: 100vh;
             overflow: hidden;
         }
-
-        /* TOP NAV */
         nav {
-            padding: 20px;
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #111;
+            background: #000;
         }
-
         .back-link {
             color: var(--dim);
             text-decoration: none;
             font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: 2px;
         }
-
-        .back-link:hover { color: var(--accent); }
-
-        /* TERMINAL SCREEN */
+        .back-link:hover { color: #fff; }
         .terminal-container {
             flex: 1;
-            padding: 20px;
+            padding: 30px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
-
-        .log-entry { font-size: 14px; line-height: 1.6; }
-        .timestamp { color: var(--dim); margin-right: 10px; }
+        .log-entry { font-size: 14px; line-height: 1.6; letter-spacing: 0.5px; }
+        .timestamp { color: var(--dim); margin-right: 15px; font-weight: 700; }
         .success { color: #1ed760; }
         .warning { color: var(--accent); }
-
-        /* COMMAND INPUT AREA */
         .input-area {
-            background: var(--terminal-gray);
-            padding: 20px;
+            background: #050505;
+            padding: 25px 30px;
             border-top: 1px solid #111;
             display: flex;
             align-items: center;
         }
-
-        .prompt { color: var(--accent); margin-right: 15px; font-weight: bold; }
-
+        .prompt { color: var(--accent); margin-right: 15px; font-weight: 900; }
         input {
             background: transparent;
             border: none;
@@ -79,49 +71,34 @@
             width: 100%;
             outline: none;
         }
-
-        /* MOBILE FIX */
-        @media (max-width: 768px) {
-            .terminal-container { padding: 15px; }
-            .log-entry { font-size: 12px; }
-        }
     </style>
 </head>
 <body>
-
     <nav>
-        <div style="color: var(--accent); font-weight: 900;">SYSTEM_TERMINAL_V1</div>
+        <div style="color: var(--accent); font-weight: 900; letter-spacing: 1px;">SYSTEM_TERMINAL_V1</div>
         <a href="index.html" class="back-link">EXIT_TO_HOME</a>
     </nav>
-
     <div class="terminal-container" id="logs">
         <div class="log-entry">
-            <span class="timestamp">[18:42:01]</span>
-            <span class="success">INITIALIZING LOGIC101 PROTOCOL...</span>
+            <span class="timestamp">[00:00:01]</span>
+            <span class="success">CORE_LOGIC_LOADED: SUCCESS</span>
         </div>
         <div class="log-entry">
-            <span class="timestamp">[18:42:03]</span>
-            <span>ESTABLISHING SECURE LINK TO FRIO_DATABASE...</span>
+            <span class="timestamp">[00:00:02]</span>
+            <span>SYNCING WITH 35,000 ACTIVE NODES...</span>
         </div>
         <div class="log-entry">
-            <span class="timestamp">[18:42:05]</span>
-            <span class="warning">35,000 NODES DETECTED IN CURRENT CYCLE.</span>
-        </div>
-        <div class="log-entry">
-            <span class="timestamp">[18:42:06]</span>
-            <span>SYSTEM STATUS: <span class="success">OPTIMAL</span></span>
+            <span class="timestamp">[00:00:03]</span>
+            <span class="warning">CONNECTION ENCRYPTED via FRIO_PROTOCOL</span>
         </div>
     </div>
-
     <div class="input-area">
         <span class="prompt">admin@logic101:~$</span>
-        <input type="text" id="cmdInput" placeholder="Enter logic command..." autofocus>
+        <input type="text" id="cmdInput" placeholder="Initialize command..." autofocus>
     </div>
-
     <script>
         const input = document.getElementById('cmdInput');
         const logs = document.getElementById('logs');
-
         input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 const val = this.value;
@@ -129,16 +106,13 @@
                 newLog.className = 'log-entry';
                 newLog.innerHTML = `<span class="timestamp">[${new Date().toLocaleTimeString()}]</span> <span class="warning">> ${val}</span>`;
                 logs.appendChild(newLog);
-                
-                // Simple auto-reply logic
                 setTimeout(() => {
                     const response = document.createElement('div');
                     response.className = 'log-entry';
-                    response.innerHTML = `<span class="timestamp">[${new Date().toLocaleTimeString()}]</span> COMMAND_RECOGNIZED: EXECUTION_PENDING...`;
+                    response.innerHTML = `<span class="timestamp">[${new Date().toLocaleTimeString()}]</span> RECOGNIZED: EXECUTION_QUEUED`;
                     logs.appendChild(response);
                     logs.scrollTop = logs.scrollHeight;
-                }, 500);
-
+                }, 400);
                 this.value = '';
                 logs.scrollTop = logs.scrollHeight;
             }
