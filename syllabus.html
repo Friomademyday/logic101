@@ -8,64 +8,215 @@
         :root {
             --bg: #000000;
             --accent: #ab9ff2;
+            --border: #1a1a1a;
             --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
         }
+
         body {
             margin: 0;
-            /* Stronger purple spotlight */
-            background: radial-gradient(circle at top, #1a152e 0%, #000000 60%);
+            background: radial-gradient(circle at top, #1a152e 0%, #000000 80%);
             color: #fff;
             font-family: var(--font);
+            -webkit-font-smoothing: antialiased;
             min-height: 100vh;
         }
+
+        nav {
+            height: 80px;
+            background: rgba(0,0,0,0.9);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo { font-weight: 900; font-size: 24px; color: var(--accent); letter-spacing: -1px; }
+
         header {
-            padding: 100px 40px 60px 40px;
-            max-width: 1200px;
+            padding: 120px 20px 80px 20px;
+            text-align: center;
+            max-width: 1100px;
             margin: 0 auto;
         }
-        header h1 { 
-            font-size: 70px; 
-            margin: 0; 
-            letter-spacing: -1px; /* Less compacted */
-            font-weight: 800; 
-            line-height: 1.1;
-        }
-        header p { 
-            color: #777; 
-            margin-top: 25px; 
-            font-size: 20px; 
-            line-height: 1.6; /* Breathing room */
-            max-width: 600px; 
-        }
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px; /* More space between cards */
-            padding: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .module {
+
+        .home-btn {
+            display: inline-block;
+            margin-bottom: 40px;
+            padding: 14px 30px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
             background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            padding: 45px;
-            border-radius: 28px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: 0.3s;
         }
-        h2 { font-size: 32px; margin: 15px 0; font-weight: 700; letter-spacing: -0.5px; }
-        .description { color: #888; font-size: 16px; line-height: 1.7; margin-bottom: 50px; }
+
+        .home-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        header h1 { 
+            font-size: clamp(50px, 12vw, 110px); 
+            letter-spacing: -4px; 
+            margin: 0 0 30px 0; 
+            font-weight: 900; 
+            line-height: 0.9;
+        }
+
+        header p { 
+            color: #888; 
+            font-size: 22px; 
+            line-height: 1.7; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        .framework-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 100px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .module-block {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            background: #050505;
+            border: 1px solid var(--border);
+            padding: 60px 40px;
+            border-radius: 40px;
+            align-items: center;
+        }
+
+        .module-meta h2 { font-size: 42px; margin: 15px 0; font-weight: 900; letter-spacing: -2px; }
+        .module-meta p { color: #666; line-height: 1.8; font-size: 18px; margin: 0; }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: #000;
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+
+        .tool-card:hover { border-color: var(--accent); }
+
+        .tool-card h4 { 
+            margin: 0 0 12px 0; 
+            color: var(--accent); 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-weight: 900;
+        }
+
+        .tool-card p { margin: 0; font-size: 15px; color: #555; line-height: 1.6; font-weight: 500; }
+
+        .phase-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(171, 159, 242, 0.1);
+            color: var(--accent);
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .module-block { grid-template-columns: 1fr; padding: 40px 25px; }
+            .tools-grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 60px; }
+        }
     </style>
 </head>
 <body>
+
+    <nav>
+        <div class="logo">Logic101</div>
+    </nav>
+
     <header>
-        <h1>Curriculum.</h1>
-        <p>The 35k node architecture protocol. A specialized journey from Zero to One Hundred.</p>
+        <a href="index.html" class="home-btn">← GO BACK HOME</a>
+        <h1>Framework.</h1>
+        <p>A non-linear path from absolute zero to complex architecture. We bridge the gap between human thought and machine execution.</p>
     </header>
-    <main class="course-grid">
-        <div class="module">
-            <span style="color:var(--accent); font-weight:900; letter-spacing:2px; font-size:11px;">NODE_01</span>
-            <h2>Architectural Base</h2>
-            <p class="description">Mastering core system logic. Deconstructing complex engineering challenges into binary solutions.</p>
+
+    <main class="framework-container">
+        
+        <div class="module-block">
+            <div class="module-meta">
+                <span class="phase-tag">PHASE_01: ORIGIN</span>
+                <h2>Base Logic</h2>
+                <p>Starting at the floor. We master variables and loops by translating code into plain English analogies first.</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>AI Simplifier</h4>
+                    <p>Converts high-level syntax into human logic instantly.</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Micro IDE</h4>
+                    <p>A lightweight sandbox for your first lines of code.</p>
+                </div>
+            </div>
         </div>
+
+        <div class="module-block">
+            <div class="module-meta">
+                <span class="phase-tag">PHASE_02: BUILD</span>
+                <h2>Structural Node</h2>
+                <p>Scaling up. Integrating data structures and learning how systems communicate across the protocol.</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>Flow Neural</h4>
+                    <p>AI-assisted mapping of data paths and system logic.</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Modular IDE</h4>
+                    <p>Expanded environment for multi-file system building.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-block">
+            <div class="module-meta">
+                <span class="phase-tag">PHASE_03: APEX</span>
+                <h2>Complex Logic</h2>
+                <p>High-speed engineering. Deploying self-sustaining systems and mastering full architectural control.</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>Architect AI</h4>
+                    <p>The AI evolves into your peer-reviewer for complex code.</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Pro Terminal</h4>
+                    <p>Full-access IDE for production-grade project execution.</p>
+                </div>
+            </div>
+        </div>
+
     </main>
+
+    <footer style="padding: 60px; text-align: center; color: #1a1a1a; font-weight: 900; letter-spacing: 10px; font-size: 14px;">
+        DESIGNED & CREATED BY FRIO
+    </footer>
+
 </body>
 </html>
