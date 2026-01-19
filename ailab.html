@@ -34,7 +34,7 @@
         }
         .logo { font-weight: 900; font-size: 24px; color: var(--accent); letter-spacing: -1px; }
         .hero {
-            padding: 120px 40px 80px 40px;
+            padding: 100px 20px 60px 20px;
             text-align: center;
             max-width: 1000px;
             margin: 0 auto;
@@ -51,93 +51,94 @@
             font-size: 14px;
             background: #0a0a0a;
             letter-spacing: 1px;
-            transition: 0.3s;
         }
-        .home-btn:hover { border-color: var(--accent); color: var(--accent); }
         .hero h1 { 
-            font-size: clamp(50px, 12vw, 100px); 
+            font-size: clamp(45px, 10vw, 90px); 
             letter-spacing: -2px; 
-            margin: 0 0 25px 0; 
+            margin: 0 0 20px 0; 
             font-weight: 900; 
             line-height: 1; 
         }
         .hero p { 
             color: #888; 
-            font-size: 22px; 
-            line-height: 1.7; 
+            font-size: 20px; 
+            line-height: 1.6; 
             max-width: 750px; 
             margin: 0 auto; 
-            font-weight: 500;
         }
         .feature-grid {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 40px 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
         .node-card { 
             background: #050505; 
             border: 1px solid var(--border); 
-            padding: 50px; 
+            padding: 40px; 
             border-radius: 32px; 
         }
         .status-tag { 
             display: inline-block; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
             padding: 8px 16px; 
             background: rgba(171, 159, 242, 0.1); 
             border-radius: 10px; 
-            font-size: 11px; 
+            font-size: 10px; 
             font-weight: 900; 
             color: var(--accent); 
             letter-spacing: 3px; 
             text-transform: uppercase; 
         }
-        h3 { font-size: 32px; margin: 0 0 20px 0; font-weight: 800; letter-spacing: -1px; }
+        h3 { font-size: 28px; margin: 0 0 15px 0; font-weight: 800; }
         
-        /* RESTRICTED SECTION FIX */
         .cta-section { 
-            margin: 100px 40px; 
+            margin: 80px 20px; 
             background: var(--accent); 
             border-radius: 40px; 
-            padding: 110px 40px; 
+            padding: 80px 30px; 
             text-align: center; 
             color: #000; 
+            overflow: hidden;
         }
         .cta-section h2 { 
-            font-size: clamp(40px, 9vw, 75px); 
+            font-size: clamp(32px, 8vw, 65px); 
             font-weight: 900; 
-            letter-spacing: 2px; 
-            margin: 0 0 30px 0; 
+            letter-spacing: 1px; 
+            margin: 0 0 25px 0; 
             line-height: 1.1;
             text-transform: uppercase;
+            word-wrap: break-word;
         }
         .cta-section p { 
             font-weight: 700; 
-            font-size: 22px; 
-            line-height: 1.8; 
-            margin-bottom: 50px; 
-            letter-spacing: 0.5px;
-            max-width: 800px;
+            font-size: 18px; 
+            line-height: 1.6; 
+            margin-bottom: 40px; 
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
         .btn-login { 
             background: #000; 
             color: #fff; 
-            padding: 24px 60px; 
-            border-radius: 20px; 
+            padding: 20px 45px; 
+            border-radius: 18px; 
             text-decoration: none; 
             font-weight: 900; 
             text-transform: uppercase; 
-            font-size: 16px; 
-            letter-spacing: 2px;
+            font-size: 14px; 
+            letter-spacing: 1.5px;
             display: inline-block; 
-            transition: 0.3s;
         }
-        .btn-login:hover { transform: scale(1.05); }
+
+        @media (max-width: 480px) {
+            .cta-section { padding: 60px 20px; }
+            .cta-section h2 { font-size: 36px; }
+            .hero h1 { font-size: 48px; }
+        }
     </style>
 </head>
 <body>
@@ -147,22 +148,17 @@
     <header class="hero">
         <a href="index.html" class="home-btn">← GO BACK HOME</a>
         <h1>AI Lab.</h1>
-        <p>Integrated intelligence designed for architectural precision. Access specialized neural models to optimize your engineering logic.</p>
+        <p>Integrated intelligence designed for architectural precision.</p>
     </header>
     <main class="feature-grid">
         <div class="node-card">
             <span class="status-tag">Core_System</span>
             <h3>Architect AI</h3>
-            <p style="color:#666; line-height:1.8; font-size:17px;">Generate high-performance logic structures with zero bloat. Engineered specifically for the 35k node protocol.</p>
-        </div>
-        <div class="node-card">
-            <span class="status-tag">Validation</span>
-            <h3>Logic Tracer</h3>
-            <p style="color:#666; line-height:1.8; font-size:17px;">Identify and rectify structural flaws in your system before deployment. Real-time diagnostic feedback.</p>
+            <p style="color:#666; line-height:1.7;">Generate high-performance logic structures with zero bloat.</p>
         </div>
     </main>
     <section class="cta-section">
-        <h2>System Encrypted.</h2>
+        <h2>System Locked.</h2>
         <p>Authentication required. To access the laboratory and its specialized features, you must first verify your credentials.</p>
         <a href="login.html" class="btn-login">Login / Sign Up</a>
     </section>
