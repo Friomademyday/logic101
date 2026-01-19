@@ -7,13 +7,68 @@ const app = document.getElementById("app");
 
 const style = document.createElement("style");
 style.textContent = `
-    .wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-    .card { background: white; padding: 40px; border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); width: 100%; max-width: 400px; text-align: center; }
-    h1 { font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
-    p { color: #86868b; margin-bottom: 30px; }
-    input { width: 100%; padding: 16px; margin: 8px 0; box-sizing: border-box; border-radius: 12px; border: 1px solid #d2d2d7; font-size: 16px; outline: none; }
-    button { width: 100%; padding: 16px; background: #0071e3; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 15px; font-size: 16px; }
-    .status-badge { display: inline-block; padding: 6px 12px; border-radius: 20px; background: #f5f5f7; color: #1d1d1f; font-weight: 600; margin-top: 10px; }
+    :root {
+        --bg: #000000;
+        --card: #0a0a0a;
+        --accent: #ab9ff2;
+        --border: #1a1a1a;
+        --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    }
+    .wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; font-family: var(--font); box-sizing: border-box; }
+    .card { background: var(--card); padding: 40px; border-radius: 24px; border: 1px solid var(--border); width: 100%; max-width: 380px; text-align: center; box-sizing: border-box; }
+    h1 { font-weight: 800; letter-spacing: -2px; margin: 0 0 10px 0; color: #fff; font-size: 32px; }
+    .card p { color: #666; margin-bottom: 30px; font-size: 15px; font-weight: 500; text-transform: none; letter-spacing: normal; }
+    .input-group { margin-bottom: 25px; text-align: left; }
+    input { 
+        width: 100%; 
+        padding: 18px; 
+        margin: 6px 0; 
+        box-sizing: border-box; 
+        border-radius: 14px; 
+        border: 1px solid var(--border); 
+        background: #050505; 
+        color: #fff; 
+        font-size: 16px; 
+        outline: none; 
+        transition: 0.2s;
+    }
+    input:focus { border-color: var(--accent); }
+    button { 
+        width: 100%; 
+        padding: 18px; 
+        background: var(--accent); 
+        color: #000; 
+        border: none; 
+        border-radius: 16px; 
+        font-weight: 800; 
+        cursor: pointer; 
+        margin-top: 10px; 
+        font-size: 16px; 
+        text-transform: uppercase; 
+        letter-spacing: 1px;
+    }
+    button:active { transform: scale(0.98); }
+    .status-badge { 
+        display: inline-block; 
+        padding: 8px 16px; 
+        border-radius: 10px; 
+        background: rgba(171, 159, 242, 0.1); 
+        color: var(--accent); 
+        font-weight: 700; 
+        margin-top: 10px; 
+        font-size: 12px; 
+        letter-spacing: 1px;
+    }
+    .secondary-btn { 
+        background: transparent; 
+        color: #666; 
+        border: 1px solid var(--border); 
+        margin-top: 12px; 
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    .secondary-btn:hover { color: #fff; border-color: #444; }
 `;
 document.head.appendChild(style);
 
@@ -49,13 +104,16 @@ function renderLogin() {
     app.innerHTML = `
         <div class="wrapper">
             <div class="card">
-                <h1>LOGIC 101</h1>
-                <p>Request access to the workspace.</p>
-                <input type="text" id="userName" placeholder="Full Name">
-                <input type="email" id="userEmail" placeholder="Email Address">
-                <input type="password" id="userPass" placeholder="Password">
-                <button onclick="signUp()">Join Waiting List</button>
+                <h1>Logic101</h1>
+                <p>Initialize node access request.</p>
+                <div class="input-group">
+                    <input type="text" id="userName" placeholder="Full Name">
+                    <input type="email" id="userEmail" placeholder="Email Address">
+                    <input type="password" id="userPass" placeholder="Password">
+                </div>
+                <button onclick="signUp()">Request Access</button>
             </div>
+            <div style="margin-top: 30px; font-size: 10px; color: #222; font-weight: 900; letter-spacing: 3px;">DESIGNED BY FRIO</div>
         </div>
     `;
 }
@@ -81,12 +139,12 @@ function renderPending(email) {
     app.innerHTML = `
         <div class="wrapper">
             <div class="card">
-                <h1>Application Sent</h1>
-                <p>Your request is in the queue.</p>
-                <div class="status-badge">Status: Pending Approval</div>
-                <p style="margin-top:25px; font-size: 14px;">Logged in as: ${email}</p>
-                <button onclick="location.reload()">Check My Status</button>
-                <button onclick="supabaseClient.auth.signOut().then(() => location.reload())" style="background:none; color:#0071e3; margin-top:10px;">Sign Out</button>
+                <h1>Sync Pending</h1>
+                <p>Your request is currently in the verification queue.</p>
+                <div class="status-badge">STATUS: PENDING_APPROVAL</div>
+                <div style="margin: 25px 0; font-size: 13px; color: #444;">LOGGED AS: ${email}</div>
+                <button onclick="location.reload()">Refresh Link</button>
+                <button class="secondary-btn" onclick="supabaseClient.auth.signOut().then(() => location.reload())">Terminate Session</button>
             </div>
         </div>
     `;
@@ -96,10 +154,10 @@ function renderSuccess() {
     app.innerHTML = `
         <div class="wrapper">
             <div class="card">
-                <h1 style="color: #34c759;">Welcome In</h1>
-                <p>Your application has been approved by the admin.</p>
-                <button onclick="alert('Entering Workspace...')">Go to Dashboard</button>
-                <button onclick="supabaseClient.auth.signOut().then(() => location.reload())" style="background:none; color:#0071e3; margin-top:10px;">Sign Out</button>
+                <h1>Link Secure</h1>
+                <p>Credentials verified. Welcome to the ecosystem.</p>
+                <button onclick="location.href='index.html'">Enter Workspace</button>
+                <button class="secondary-btn" onclick="supabaseClient.auth.signOut().then(() => location.reload())">Logout</button>
             </div>
         </div>
     `;
@@ -109,10 +167,10 @@ function renderAdmin() {
     app.innerHTML = `
         <div class="wrapper">
             <div class="card">
-                <h1>Admin Panel</h1>
-                <p>You are logged in as the owner.</p>
-                <button onclick="window.open('https://supabase.com/dashboard/project/homkmdnutdhmwjpojspw/editor', '_blank')">Approve Users Now</button>
-                <button onclick="supabaseClient.auth.signOut().then(() => location.reload())" style="background:none; color:#0071e3; margin-top:10px;">Sign Out</button>
+                <h1>Commander</h1>
+                <p>Administrative link established.</p>
+                <button onclick="window.open('https://supabase.com/dashboard/project/homkmdnutdhmwjpojspw/editor', '_blank')">Review Nodes</button>
+                <button class="secondary-btn" onclick="supabaseClient.auth.signOut().then(() => location.reload())">Terminate</button>
             </div>
         </div>
     `;
