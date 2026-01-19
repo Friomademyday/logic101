@@ -20,12 +20,14 @@
             flex-direction: column;
             min-height: 100vh;
             align-items: center;
-            justify-content: center;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
         nav { 
-            position: absolute;
-            top: 0;
-            padding: 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
         }
         .home-btn { 
             padding: 16px 32px; 
@@ -38,82 +40,105 @@
             letter-spacing: 2px;
             background: #0a0a0a;
             text-transform: uppercase;
+            text-align: center;
         }
         .sandbox-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
+            width: 100%;
         }
         .sandbox-header h1 {
-            font-size: clamp(40px, 8vw, 70px);
+            font-size: clamp(40px, 10vw, 80px);
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             margin: 0;
+            line-height: 1.1;
         }
         .sandbox-header p {
             color: #666;
-            font-size: 20px;
+            font-size: 18px;
             letter-spacing: 0.5px;
-            margin-top: 15px;
+            margin: 15px auto 0 auto;
+            max-width: 300px;
+            line-height: 1.5;
         }
         .node-container {
             display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 900px;
-            padding: 0 20px;
+            flex-direction: column; /* Stacks vertically on mobile for centering */
+            gap: 25px;
+            width: 100%;
+            max-width: 400px; /* Constrains width so it stays centered */
+            padding-bottom: 60px;
         }
         .logic-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 40px;
-            width: 280px;
+            padding: 40px 30px;
+            border-radius: 35px;
             text-align: center;
-            transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            transition: 0.3s;
             cursor: pointer;
+            box-sizing: border-box;
         }
-        .logic-card:hover {
-            background: rgba(171, 159, 242, 0.05);
-            border-color: var(--accent);
-            transform: translateY(-10px);
+        .logic-card:active {
+            background: rgba(171, 159, 242, 0.1);
+            transform: scale(0.98);
         }
         .icon-box {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: #000;
             border: 1px solid var(--border);
-            border-radius: 18px;
-            margin: 0 auto 25px auto;
+            border-radius: 15px;
+            margin: 0 auto 20px auto;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent);
             font-weight: 900;
-            font-size: 20px;
+            font-size: 18px;
         }
         .logic-card h3 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             margin: 0 0 10px 0;
             text-transform: uppercase;
         }
         .logic-card p {
             color: #555;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
             margin: 0;
+            font-weight: 500;
+        }
+        .status-footer {
+            margin-top: auto;
+            padding: 40px 0;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: #222;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
         }
         .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: var(--accent);
             border-radius: 50%;
-            display: inline-block;
-            margin-right: 10px;
-            box-shadow: 0 0 15px var(--accent);
+            margin-right: 12px;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        @media (min-width: 768px) {
+            .node-container {
+                flex-direction: row;
+                max-width: 1000px;
+            }
+            .logic-card { width: 300px; }
         }
     </style>
 </head>
@@ -129,7 +154,7 @@
     </div>
 
     <div class="node-container">
-        <div class="logic-card" onclick="alert('System Latency: 0.02ms')">
+        <div class="logic-card" onclick="alert('Latency: 0.02ms')">
             <div class="icon-box">01</div>
             <h3>Ping Node</h3>
             <p>Test the response speed of the architecture.</p>
@@ -141,15 +166,15 @@
             <p>Visualize data movement across the system.</p>
         </div>
 
-        <div class="logic-card" onclick="alert('Key: LOGIC101_SECURED')">
+        <div class="logic-card" onclick="alert('Verified: LOGIC101_SECURED')">
             <div class="icon-box">03</div>
             <h3>Verify</h3>
             <p>Check the integrity of the logic gates.</p>
         </div>
     </div>
 
-    <div style="margin-top: 80px; font-size: 11px; font-weight: 900; letter-spacing: 5px; color: #222; text-transform: uppercase;">
-        <span class="status-dot"></span> System Live
+    <div class="status-footer">
+        <div class="status-dot"></div> System Live
     </div>
 
 </body>
