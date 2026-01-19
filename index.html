@@ -3,14 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logic101 | by FRiO</title>
-    <script src="landing.js" defer></script>
+    <title>Logic101 | 0 to 100</title>
     <style>
-        body { margin: 0; background-color: #050505; overflow: hidden; }
-        #hero-mount { width: 100%; height: 100vh; }
+        :root {
+            --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+            --accent: #0071e3;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: var(--apple-font);
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* The Stage Lighting */
+        .wrapper {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 100%, #161617 0%, #000 70%);
+        }
+
+        .container {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: emerge 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes emerge {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: clamp(64px, 15vw, 160px);
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            margin: 0;
+            line-height: 0.9;
+            background: linear-gradient(180deg, #fff 40%, #555 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: clamp(24px, 5vw, 42px);
+            font-weight: 700;
+            margin-top: 15px;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: #86868b;
+            max-width: 580px;
+            margin: 40px auto;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Tactile Heavy Buttons */
+        .btn-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn-deploy {
+            background: #fff;
+            color: #000;
+            padding: 22px 50px;
+            font-size: 18px;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+        }
+
+        .btn-deploy:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 113, 227, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            padding: 22px 50px;
+            font-size: 18px;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 14px;
+            border: 2px solid #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Evolution Gauge */
+        .gauge-area {
+            margin-top: 60px;
+            width: 320px;
+        }
+
+        .gauge-track {
+            height: 2px;
+            background: #1c1c1e;
+            width: 100%;
+            position: relative;
+        }
+
+        .gauge-fill {
+            position: absolute;
+            height: 100%;
+            width: 0%;
+            background: #fff;
+            box-shadow: 0 0 20px #fff;
+            animation: fillGauge 2.5s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+        }
+
+        @keyframes fillGauge {
+            to { width: 75%; }
+        }
+
+        .gauge-label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 10px;
+            font-weight: 900;
+            color: #3a3a3c;
+            letter-spacing: 3px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #2c2c2e;
+        }
     </style>
 </head>
 <body>
-    <div id="hero-mount"></div>
+    <div class="wrapper">
+        <div class="container">
+            <h1>Logic101</h1>
+            <div class="tagline">ZERO TO ONE HUNDRED</div>
+            <p>High-level coding architecture simplified. Master the logic, deploy the future. Created by Frio.</p>
+            
+            <div class="btn-row">
+                <a href="login.html" class="btn-deploy">Deploy</a>
+                <a href="#" class="btn-outline">Syllabus</a>
+            </div>
+
+            <div class="gauge-area">
+                <div class="gauge-track">
+                    <div class="gauge-fill"></div>
+                </div>
+                <div class="gauge-label">
+                    <span>PATH:000</span>
+                    <span>EVOLUTION</span>
+                    <span>GOAL:100</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            DESIGNED & CREATED BY FRIO
+        </div>
+    </div>
 </body>
 </html>
