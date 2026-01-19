@@ -30,7 +30,12 @@
             padding: 0 40px;
         }
 
-        .logo { font-weight: 900; font-size: 24px; color: var(--accent); letter-spacing: -1px; }
+        .logo { 
+            font-weight: 900; 
+            font-size: 24px; 
+            color: var(--accent); 
+            letter-spacing: 1px; /* Spaced out logo */
+        }
 
         header {
             padding: 120px 20px 80px 20px;
@@ -41,39 +46,36 @@
 
         .home-btn {
             display: inline-block;
-            margin-bottom: 40px;
-            padding: 14px 30px;
+            margin-bottom: 50px;
+            padding: 16px 32px;
             border: 1px solid var(--border);
             border-radius: 14px;
             color: #fff;
             text-decoration: none;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 13px;
             background: #0a0a0a;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px; /* Open spacing for button text */
             text-transform: uppercase;
             transition: 0.3s;
         }
 
-        .home-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
         header h1 { 
             font-size: clamp(50px, 12vw, 110px); 
-            letter-spacing: -4px; 
+            letter-spacing: 2px; /* Fixed: Letters no longer touch */
             margin: 0 0 30px 0; 
             font-weight: 900; 
-            line-height: 0.9;
+            line-height: 1.2; /* Fixed: Lines have more room */
+            text-transform: uppercase;
         }
 
         header p { 
             color: #888; 
             font-size: 22px; 
-            line-height: 1.7; 
+            line-height: 1.8; 
             max-width: 800px; 
             margin: 0 auto; 
+            letter-spacing: 0.5px;
         }
 
         .framework-container {
@@ -82,65 +84,79 @@
             padding: 40px 20px 100px 20px;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 60px;
         }
 
         .module-block {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
-            gap: 40px;
+            gap: 50px;
             background: #050505;
             border: 1px solid var(--border);
-            padding: 60px 40px;
+            padding: 70px 50px;
             border-radius: 40px;
             align-items: center;
         }
 
-        .module-meta h2 { font-size: 42px; margin: 15px 0; font-weight: 900; letter-spacing: -2px; }
-        .module-meta p { color: #666; line-height: 1.8; font-size: 18px; margin: 0; }
+        .module-meta h2 { 
+            font-size: 48px; 
+            margin: 20px 0; 
+            font-weight: 900; 
+            letter-spacing: 1px; /* Spaced header */
+            line-height: 1.1;
+        }
+
+        .module-meta p { 
+            color: #666; 
+            line-height: 1.9; 
+            font-size: 19px; 
+            margin: 0; 
+        }
 
         .tools-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
 
         .tool-card {
             background: #000;
             border: 1px solid var(--border);
-            padding: 30px;
+            padding: 35px;
             border-radius: 24px;
-            transition: 0.3s;
         }
 
-        .tool-card:hover { border-color: var(--accent); }
-
         .tool-card h4 { 
-            margin: 0 0 12px 0; 
+            margin: 0 0 15px 0; 
             color: var(--accent); 
-            font-size: 12px; 
+            font-size: 11px; 
             text-transform: uppercase; 
-            letter-spacing: 2px; 
+            letter-spacing: 3px; /* High spacing for small bold text */
             font-weight: 900;
         }
 
-        .tool-card p { margin: 0; font-size: 15px; color: #555; line-height: 1.6; font-weight: 500; }
+        .tool-card p { 
+            margin: 0; 
+            font-size: 15px; 
+            color: #555; 
+            line-height: 1.7; 
+            font-weight: 600; 
+        }
 
         .phase-tag {
             display: inline-block;
-            padding: 8px 16px;
+            padding: 10px 20px;
             background: rgba(171, 159, 242, 0.1);
             color: var(--accent);
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 11px;
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 4px; /* Ultra-wide for tech tags */
         }
 
         @media (max-width: 900px) {
-            .module-block { grid-template-columns: 1fr; padding: 40px 25px; }
-            .tools-grid { grid-template-columns: 1fr; }
-            header h1 { font-size: 60px; }
+            .module-block { grid-template-columns: 1fr; padding: 50px 30px; }
+            header h1 { font-size: 55px; letter-spacing: 1px; }
         }
     </style>
 </head>
@@ -194,27 +210,9 @@
             </div>
         </div>
 
-        <div class="module-block">
-            <div class="module-meta">
-                <span class="phase-tag">PHASE_03: APEX</span>
-                <h2>Complex Logic</h2>
-                <p>High-speed engineering. Deploying self-sustaining systems and mastering full architectural control.</p>
-            </div>
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <h4>Architect AI</h4>
-                    <p>The AI evolves into your peer-reviewer for complex code.</p>
-                </div>
-                <div class="tool-card">
-                    <h4>Pro Terminal</h4>
-                    <p>Full-access IDE for production-grade project execution.</p>
-                </div>
-            </div>
-        </div>
-
     </main>
 
-    <footer style="padding: 60px; text-align: center; color: #1a1a1a; font-weight: 900; letter-spacing: 10px; font-size: 14px;">
+    <footer style="padding: 100px; text-align: center; color: #1a1a1a; font-weight: 900; letter-spacing: 15px; font-size: 14px;">
         DESIGNED & CREATED BY FRIO
     </footer>
 
