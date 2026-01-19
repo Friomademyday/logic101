@@ -67,8 +67,18 @@ style.textContent = `
         text-transform: uppercase;
         font-size: 12px;
         letter-spacing: 1px;
+        width: 100%;
+        padding: 18px;
+        border-radius: 16px;
+        font-weight: 800;
+        cursor: pointer;
     }
     .secondary-btn:hover { color: #fff; border-color: #444; }
+    .admin-tool-btn {
+        background: rgba(171, 159, 242, 0.05);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+    }
 `;
 document.head.appendChild(style);
 
@@ -166,12 +176,20 @@ function renderSuccess() {
 function renderAdmin() {
     app.innerHTML = `
         <div class="wrapper">
-            <div class="card">
+            <div class="card" style="border-color: var(--accent);">
                 <h1>Commander</h1>
-                <p>Administrative link established.</p>
-                <button onclick="window.open('https://supabase.com/dashboard/project/homkmdnutdhmwjpojspw/editor', '_blank')">Review Nodes</button>
-                <button class="secondary-btn" onclick="supabaseClient.auth.signOut().then(() => location.reload())">Terminate</button>
+                <p>Administrative link established. Welcome back, Frio.</p>
+                
+                <button onclick="location.href='index.html'">Enter Workspace</button>
+                
+                <button class="secondary-btn admin-tool-btn" 
+                    onclick="window.open('https://supabase.com/dashboard/project/homkmdnutdhmwjpojspw/editor', '_blank')">
+                    Manage Nodes (Supabase)
+                </button>
+
+                <button class="secondary-btn" onclick="supabaseClient.auth.signOut().then(() => location.reload())">Terminate Session</button>
             </div>
+            <div style="margin-top: 30px; font-size: 10px; color: #222; font-weight: 900; letter-spacing: 3px;">ADMIN OVERRIDE ACTIVE</div>
         </div>
     `;
 }
