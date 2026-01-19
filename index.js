@@ -1,187 +1,116 @@
+const SUPABASE_URL = "https://homkmdnutdhmwjpojspw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ghgy1pXBtqm0ZuiDAJcFgw_ipx94lPC";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const app = document.getElementById("app");
 
 const style = document.createElement("style");
 style.textContent = `
-    * {
-        box-sizing: border-box;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: #fbfbfd;
-        color: #1d1d1f;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    .main-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        padding: 20px;
-    }
-    .glass-card {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-radius: 30px;
-        padding: 50px;
-        width: 100%;
-        max-width: 500px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.04);
-        text-align: center;
-        border: 1px solid rgba(255,255,255,0.3);
-    }
-    .logo-mark {
-        font-weight: 700;
-        font-size: 1.5rem;
-        letter-spacing: -0.05em;
-        margin-bottom: 40px;
-    }
-    .headline {
-        font-size: 2.2rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        margin-bottom: 15px;
-        line-height: 1.1;
-    }
-    .subheadline {
-        font-size: 1.1rem;
-        color: #86868b;
-        line-height: 1.5;
-        margin-bottom: 40px;
-    }
-    .input-group {
-        width: 100%;
-        margin-bottom: 12px;
-    }
-    input {
-        width: 100%;
-        padding: 18px;
-        border-radius: 12px;
-        border: 1px solid #d2d2d7;
-        background: #ffffff;
-        font-size: 1rem;
-        font-family: inherit;
-        outline: none;
-        transition: border-color 0.2s;
-    }
-    input:focus {
-        border-color: #0071e3;
-    }
-    .btn-action {
-        width: 100%;
-        padding: 18px;
-        background-color: #0071e3;
-        color: white;
-        border-radius: 12px;
-        font-size: 1rem;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        margin-top: 20px;
-        transition: opacity 0.2s;
-    }
-    .btn-action:hover {
-        opacity: 0.9;
-    }
-    .status-pill {
-        display: inline-block;
-        padding: 6px 12px;
-        background: #f5f5f7;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #86868b;
-        margin-bottom: 20px;
-    }
-    .timer-view {
-        display: none;
-        padding: 40px;
-    }
-    .timer-digits {
-        font-size: 3rem;
-        font-weight: 700;
-        letter-spacing: -0.05em;
-        color: #ff3b30;
-    }
-    .hidden {
-        display: none;
-    }
+    body { margin: 0; background-color: #fbfbfd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto; color: #1d1d1f; }
+    .wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+    .card { background: white; padding: 40px; border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); width: 100%; max-width: 400px; text-align: center; }
+    h1 { font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    p { color: #86868b; margin-bottom: 30px; }
+    input { width: 100%; padding: 16px; margin: 8px 0; border-radius: 12px; border: 1px solid #d2d2d7; font-size: 16px; outline: none; }
+    button { width: 100%; padding: 16px; background: #0071e3; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 15px; font-size: 16px; }
+    .status-badge { display: inline-block; padding: 6px 12px; border-radius: 20px; background: #f5f5f7; color: #1d1d1f; font-weight: 600; margin-top: 10px; }
 `;
 document.head.appendChild(style);
 
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+async function checkAppStatus() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    
+    if (!user) {
+        renderLogin();
+        return;
+    }
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+    const { data: profile } = await supabaseClient
+        .from('profiles')
+        .select('approved')
+        .eq('id', user.id)
+        .single();
 
-function initApp() {
-    const main = document.createElement("div");
-    main.className = "main-container";
-
-    const card = document.createElement("div");
-    card.className = "glass-card";
-    card.id = "main-card";
-
-    const content = `
-        <div id="registration-view">
-            <div class="logo-mark">TechHub</div>
-            <div class="status-pill">Slots Remaining: <span id="slot-num">50000</span></div>
-            <h1 class="headline">Design. Code. Connect.</h1>
-            <p class="subheadline">An exclusive environment for developers to master new languages and collaborate with AI.</p>
-            <div class="input-group"><input type="text" id="reg-name" placeholder="Full Name"></div>
-            <div class="input-group"><input type="email" id="reg-email" placeholder="Email Address"></div>
-            <div class="input-group"><input type="password" id="reg-pass" placeholder="Password"></div>
-            <button class="btn-action" id="submit-request">Request Access</button>
-        </div>
-        <div id="pending-view" class="hidden">
-            <h1 class="headline">Request Logged</h1>
-            <p class="subheadline">We've sent your details to the administrator. You will be notified via email once your account is activated.</p>
-        </div>
-        <div id="limit-view" class="hidden">
-            <h1 class="headline">Monthly Limit Reached</h1>
-            <p class="subheadline">Maximum users reached. New slots open in:</p>
-            <div class="timer-digits" id="countdown">99:59:59</div>
-        </div>
-    `;
-
-    card.innerHTML = content;
-    main.appendChild(card);
-    app.appendChild(main);
-
-    document.getElementById("submit-request").addEventListener("click", handleSignup);
-    checkSystemStatus();
-}
-
-async function checkSystemStatus() {
-    const stats = await db.collection("config").doc("global_stats").get();
-    const count = stats.data().approvedCount;
-    const remaining = 50000 - count;
-    document.getElementById("slot-num").textContent = remaining;
-
-    if (remaining <= 0) {
-        document.getElementById("registration-view").classList.add("hidden");
-        document.getElementById("limit-view").classList.remove("hidden");
-        runTimer();
+    if (user.email === "friomademyday@gmail.com") {
+        renderAdmin();
+    } else if (profile && profile.approved) {
+        renderSuccess();
+    } else {
+        renderPending(user.email);
     }
 }
 
-function runTimer() {
-    let timeLeft = 259200; 
-    const display = document.getElementById("countdown");
-    setInterval(() => {
-        let h = Math.floor(timeLeft / 3600);
-        let m = Math.floor((timeLeft % 3600) / 60);
-        let s = timeLeft % 60;
-        display.textContent = h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "
+function renderLogin() {
+    app.innerHTML = `
+        <div class="wrapper">
+            <div class="card">
+                <h1>TechHub</h1>
+                <p>Request access to the workspace.</p>
+                <input type="text" id="userName" placeholder="Full Name">
+                <input type="email" id="userEmail" placeholder="Email Address">
+                <input type="password" id="userPass" placeholder="Password">
+                <button onclick="signUp()">Join Waiting List</button>
+            </div>
+        </div>
+    `;
+}
+
+async function signUp() {
+    const email = document.getElementById("userEmail").value;
+    const password = document.getElementById("userPass").value;
+    const name = document.getElementById("userName").value;
+
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+    
+    if (data.user) {
+        await supabaseClient.from('profiles').insert([
+            { id: data.user.id, email: email, full_name: name, approved: false }
+        ]);
+        checkAppStatus();
+    } else {
+        alert(error.message);
+    }
+}
+
+function renderPending(email) {
+    app.innerHTML = `
+        <div class="wrapper">
+            <div class="card">
+                <h1>Application Sent</h1>
+                <p>Your request is in the queue.</p>
+                <div class="status-badge">Status: Pending Approval</div>
+                <p style="margin-top:25px; font-size: 14px;">Logged in as: ${email}</p>
+                <button onclick="location.reload()">Check My Status</button>
+                <button onclick="supabaseClient.auth.signOut().then(() => location.reload())" style="background:none; color:#0071e3; margin-top:10px;">Sign Out</button>
+            </div>
+        </div>
+    `;
+}
+
+function renderSuccess() {
+    app.innerHTML = `
+        <div class="wrapper">
+            <div class="card">
+                <h1 style="color: #34c759;">Welcome In</h1>
+                <p>Your application has been approved by the admin.</p>
+                <button onclick="alert('Entering Workspace...')">Go to Dashboard</button>
+                <button onclick="supabaseClient.auth.signOut().then(() => location.reload())" style="background:none; color:#0071e3; margin-top:10px;">Sign Out</button>
+            </div>
+        </div>
+    `;
+}
+
+function renderAdmin() {
+    app.innerHTML = `
+        <div class="wrapper">
+            <div class="card">
+                <h1>Admin Panel</h1>
+                <p>You are logged in as the owner.</p>
+                <button onclick="window.open('https://supabase.com/dashboard/project/homkmdnutdhmwjpojspw/editor', '_blank')">Approve Users Now</button>
+                <button onclick="supabaseClient.auth.signOut().then(() => location.reload())" style="background:none; color:#0071e3; margin-top:10px;">Sign Out</button>
+            </div>
+        </div>
+    `;
+}
+
+checkAppStatus();
