@@ -2,195 +2,186 @@ const app = document.getElementById("app");
 
 const style = document.createElement("style");
 style.textContent = `
-    :root {
-        --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    * {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
     body {
-        font-family: var(--system-font);
-        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+        background-color: #fbfbfd;
         color: #1d1d1f;
-        -webkit-font-smoothing: antialiased;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    .navbar {
+    .main-container {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        padding: 20px 40px;
-        border-bottom: 1px solid #f2f2f2;
-        background-color: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        position: sticky;
-        top: 0;
-        z-index: 100;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
     }
-    .logo {
-        font-weight: 600;
-        font-size: 1.2rem;
-        letter-spacing: -0.5px;
-    }
-    .slot-pill {
-        background-color: #f5f5f7;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: #86868b;
-    }
-    .hero {
-        padding: 100px 20px;
+    .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 30px;
+        padding: 50px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.04);
         text-align: center;
-        background-color: #ffffff;
+        border: 1px solid rgba(255,255,255,0.3);
     }
-    .hero h1 {
-        font-size: 3.5rem;
+    .logo-mark {
         font-weight: 700;
-        letter-spacing: -1.5px;
-        margin-bottom: 20px;
-        color: #1d1d1f;
+        font-size: 1.5rem;
+        letter-spacing: -0.05em;
+        margin-bottom: 40px;
     }
-    .hero p {
-        font-size: 1.4rem;
+    .headline {
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+    .subheadline {
+        font-size: 1.1rem;
         color: #86868b;
-        max-width: 700px;
-        margin: 0 auto 40px auto;
         line-height: 1.5;
+        margin-bottom: 40px;
     }
-    .btn-primary {
+    .input-group {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+    input {
+        width: 100%;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid #d2d2d7;
+        background: #ffffff;
+        font-size: 1rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    input:focus {
+        border-color: #0071e3;
+    }
+    .btn-action {
+        width: 100%;
+        padding: 18px;
         background-color: #0071e3;
         color: white;
-        padding: 16px 32px;
-        border-radius: 12px;
-        font-size: 1.1rem;
-        font-weight: 500;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    .btn-primary:hover {
-        background-color: #0077ed;
-    }
-    .content-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        padding: 80px 40px;
-        background-color: #f5f5f7;
-    }
-    .info-card {
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    }
-    .info-card h3 {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-        font-weight: 600;
-    }
-    .info-card p {
-        color: #424245;
-        line-height: 1.6;
-    }
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(20px);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-    .modal-content {
-        width: 100%;
-        max-width: 400px;
-        padding: 40px;
-        text-align: center;
-    }
-    .modal-content h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-    .input-field {
-        width: 100%;
-        padding: 15px;
-        margin-bottom: 15px;
-        border: 1px solid #d2d2d7;
         border-radius: 12px;
         font-size: 1rem;
-        background: #fbfbfd;
-        box-sizing: border-box;
-        font-family: var(--system-font);
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: opacity 0.2s;
     }
-    .input-field:focus {
-        outline: 2px solid #0071e3;
-        border-color: transparent;
+    .btn-action:hover {
+        opacity: 0.9;
+    }
+    .status-pill {
+        display: inline-block;
+        padding: 6px 12px;
+        background: #f5f5f7;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #86868b;
+        margin-bottom: 20px;
+    }
+    .timer-view {
+        display: none;
+        padding: 40px;
+    }
+    .timer-digits {
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        color: #ff3b30;
+    }
+    .hidden {
+        display: none;
     }
 `;
 document.head.appendChild(style);
 
-function buildUI() {
-    const nav = document.createElement("nav");
-    nav.className = "navbar";
-    nav.innerHTML = `
-        <div class="logo">TechHub</div>
-        <div class="slot-pill">Available Slots: <span id="slots">50000</span></div>
-    `;
-    app.appendChild(nav);
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-    const hero = document.createElement("div");
-    hero.className = "hero";
-    hero.innerHTML = `
-        <h1>A Private Space for Builders.</h1>
-        <p>Expert-led programming paths, integrated AI environments, and a network of professionals. All in one clean interface.</p>
-        <button class="btn-primary" id="open-portal">Apply for Membership</button>
-    `;
-    app.appendChild(hero);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    const grid = document.createElement("div");
-    grid.className = "content-grid";
-    
-    const modules = [
-        { title: "Deep-Dive Curriculum", desc: "Structured, high-intensity paths covering modern backend and frontend engineering." },
-        { title: "AI Integration", desc: "Built-in language models designed to assist in architectural decisions and debugging." },
-        { title: "Professional Network", desc: "A gated environment ensuring high-level collaboration with verified individuals." }
-    ];
+function initApp() {
+    const main = document.createElement("div");
+    main.className = "main-container";
 
-    modules.forEach(m => {
-        const card = document.createElement("div");
-        card.className = "info-card";
-        card.innerHTML = `<h3>${m.title}</h3><p>${m.desc}</p>`;
-        grid.appendChild(card);
-    });
-    app.appendChild(grid);
+    const card = document.createElement("div");
+    card.className = "glass-card";
+    card.id = "main-card";
 
-    const modal = document.createElement("div");
-    modal.className = "modal";
-    modal.id = "auth-modal";
-    modal.innerHTML = `
-        <div class="modal-content">
-            <h2>Access Portal</h2>
-            <input type="text" class="input-field" placeholder="Full Name">
-            <input type="email" class="input-field" placeholder="Email">
-            <input type="password" class="input-field" placeholder="Create Passkey">
-            <button class="btn-primary" style="width:100%">Submit Application</button>
-            <p style="font-size: 0.8rem; color: #86868b; margin-top: 20px;">Your application will be manually reviewed by an administrator.</p>
+    const content = `
+        <div id="registration-view">
+            <div class="logo-mark">TechHub</div>
+            <div class="status-pill">Slots Remaining: <span id="slot-num">50000</span></div>
+            <h1 class="headline">Design. Code. Connect.</h1>
+            <p class="subheadline">An exclusive environment for developers to master new languages and collaborate with AI.</p>
+            <div class="input-group"><input type="text" id="reg-name" placeholder="Full Name"></div>
+            <div class="input-group"><input type="email" id="reg-email" placeholder="Email Address"></div>
+            <div class="input-group"><input type="password" id="reg-pass" placeholder="Password"></div>
+            <button class="btn-action" id="submit-request">Request Access</button>
+        </div>
+        <div id="pending-view" class="hidden">
+            <h1 class="headline">Request Logged</h1>
+            <p class="subheadline">We've sent your details to the administrator. You will be notified via email once your account is activated.</p>
+        </div>
+        <div id="limit-view" class="hidden">
+            <h1 class="headline">Monthly Limit Reached</h1>
+            <p class="subheadline">Maximum users reached. New slots open in:</p>
+            <div class="timer-digits" id="countdown">99:59:59</div>
         </div>
     `;
-    app.appendChild(modal);
 
-    document.getElementById("open-portal").onclick = () => {
-        modal.style.display = "flex";
-    };
+    card.innerHTML = content;
+    main.appendChild(card);
+    app.appendChild(main);
 
-    window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
+    document.getElementById("submit-request").addEventListener("click", handleSignup);
+    checkSystemStatus();
 }
 
-buildUI();
+async function checkSystemStatus() {
+    const stats = await db.collection("config").doc("global_stats").get();
+    const count = stats.data().approvedCount;
+    const remaining = 50000 - count;
+    document.getElementById("slot-num").textContent = remaining;
+
+    if (remaining <= 0) {
+        document.getElementById("registration-view").classList.add("hidden");
+        document.getElementById("limit-view").classList.remove("hidden");
+        runTimer();
+    }
+}
+
+function runTimer() {
+    let timeLeft = 259200; 
+    const display = document.getElementById("countdown");
+    setInterval(() => {
+        let h = Math.floor(timeLeft / 3600);
+        let m = Math.floor((timeLeft % 3600) / 60);
+        let s = timeLeft % 60;
+        display.textContent = h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "
