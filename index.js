@@ -49,7 +49,7 @@ function renderLogin() {
     app.innerHTML = `
         <div class="wrapper">
             <div class="card">
-                <h1>TechHub</h1>
+                <h1>LOGIC 101</h1>
                 <p>Request access to the workspace.</p>
                 <input type="text" id="userName" placeholder="Full Name">
                 <input type="email" id="userEmail" placeholder="Email Address">
