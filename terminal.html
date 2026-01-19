@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic101 | System Terminal</title>
+    <style>
+        :root {
+            --bg: #000000;
+            --terminal-gray: #0a0a0a;
+            --accent: #ab9ff2;
+            --text: #ffffff;
+            --dim: #444;
+            --font: "SF Mono", "Fira Code", monospace;
+        }
 
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* TOP NAV */
+        nav {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #111;
+        }
+
+        .back-link {
+            color: var(--dim);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .back-link:hover { color: var(--accent); }
+
+        /* TERMINAL SCREEN */
+        .terminal-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .log-entry { font-size: 14px; line-height: 1.6; }
+        .timestamp { color: var(--dim); margin-right: 10px; }
+        .success { color: #1ed760; }
+        .warning { color: var(--accent); }
+
+        /* COMMAND INPUT AREA */
+        .input-area {
+            background: var(--terminal-gray);
+            padding: 20px;
+            border-top: 1px solid #111;
+            display: flex;
+            align-items: center;
+        }
+
+        .prompt { color: var(--accent); margin-right: 15px; font-weight: bold; }
+
+        input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: var(--font);
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            .terminal-container { padding: 15px; }
+            .log-entry { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="color: var(--accent); font-weight: 900;">SYSTEM_TERMINAL_V1</div>
+        <a href="index.html" class="back-link">EXIT_TO_HOME</a>
+    </nav>
+
+    <div class="terminal-container" id="logs">
+        <div class="log-entry">
+            <span class="timestamp">[18:42:01]</span>
+            <span class="success">INITIALIZING LOGIC101 PROTOCOL...</span>
+        </div>
+        <div class="log-entry">
+            <span class="timestamp">[18:42:03]</span>
+            <span>ESTABLISHING SECURE LINK TO FRIO_DATABASE...</span>
+        </div>
+        <div class="log-entry">
+            <span class="timestamp">[18:42:05]</span>
+            <span class="warning">35,000 NODES DETECTED IN CURRENT CYCLE.</span>
+        </div>
+        <div class="log-entry">
+            <span class="timestamp">[18:42:06]</span>
+            <span>SYSTEM STATUS: <span class="success">OPTIMAL</span></span>
+        </div>
+    </div>
+
+    <div class="input-area">
+        <span class="prompt">admin@logic101:~$</span>
+        <input type="text" id="cmdInput" placeholder="Enter logic command..." autofocus>
+    </div>
+
+    <script>
+        const input = document.getElementById('cmdInput');
+        const logs = document.getElementById('logs');
+
+        input.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const val = this.value;
+                const newLog = document.createElement('div');
+                newLog.className = 'log-entry';
+                newLog.innerHTML = `<span class="timestamp">[${new Date().toLocaleTimeString()}]</span> <span class="warning">> ${val}</span>`;
+                logs.appendChild(newLog);
+                
+                // Simple auto-reply logic
+                setTimeout(() => {
+                    const response = document.createElement('div');
+                    response.className = 'log-entry';
+                    response.innerHTML = `<span class="timestamp">[${new Date().toLocaleTimeString()}]</span> COMMAND_RECOGNIZED: EXECUTION_PENDING...`;
+                    logs.appendChild(response);
+                    logs.scrollTop = logs.scrollHeight;
+                }, 500);
+
+                this.value = '';
+                logs.scrollTop = logs.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
