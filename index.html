@@ -3,13 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechHub | Private Development Environment</title>
+    <title>TechHub | Access</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="index.js" defer></script>
+    <style>
+        body { margin: 0; background-color: #fbfbfd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto; color: #1d1d1f; }
+        .wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .card { background: white; padding: 40px; border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); width: 100%; max-width: 400px; text-align: center; }
+        .loading-pulse { width: 40px; height: 40px; background-color: #0071e3; border-radius: 50%; margin: 20px auto; animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse { 0% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.8); opacity: 0.5; } }
+    </style>
 </head>
-<body style="margin:0; padding:0; background-color: #ffffff;">
-    <div id="app"></div>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="index.js"></script>
+<body>
+    <div id="app">
+        <div class="wrapper">
+            <div class="card">
+                <h1>TechHub</h1>
+                <div class="loading-pulse"></div>
+                <p>Connecting to secure server...</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
