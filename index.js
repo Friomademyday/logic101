@@ -2,165 +2,195 @@ const app = document.getElementById("app");
 
 const style = document.createElement("style");
 style.textContent = `
-    .hero-section {
-        height: 100vh;
+    :root {
+        --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+        font-family: var(--system-font);
+        background-color: #ffffff;
+        color: #1d1d1f;
+        -webkit-font-smoothing: antialiased;
+    }
+    .navbar {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        text-align: center;
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        color: white;
-        padding: 20px;
+        padding: 20px 40px;
+        border-bottom: 1px solid #f2f2f2;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
     }
-    .hero-title {
-        font-size: 4rem;
-        margin-bottom: 10px;
-        background: linear-gradient(to right, #38bdf8, #818cf8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    .hero-subtitle {
+    .logo {
+        font-weight: 600;
         font-size: 1.2rem;
-        color: #94a3b8;
-        max-width: 600px;
+        letter-spacing: -0.5px;
+    }
+    .slot-pill {
+        background-color: #f5f5f7;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #86868b;
+    }
+    .hero {
+        padding: 100px 20px;
+        text-align: center;
+        background-color: #ffffff;
+    }
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        letter-spacing: -1.5px;
+        margin-bottom: 20px;
+        color: #1d1d1f;
+    }
+    .hero p {
+        font-size: 1.4rem;
+        color: #86868b;
+        max-width: 700px;
+        margin: 0 auto 40px auto;
+        line-height: 1.5;
+    }
+    .btn-primary {
+        background-color: #0071e3;
+        color: white;
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+        background-color: #0077ed;
+    }
+    .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        padding: 80px 40px;
+        background-color: #f5f5f7;
+    }
+    .info-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .info-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    .info-card p {
+        color: #424245;
         line-height: 1.6;
     }
-    .btn-join {
-        margin-top: 30px;
-        padding: 15px 40px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        color: white;
-        background-color: #38bdf8;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn-join:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
-    }
-    .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 50px;
-        background-color: #0f172a;
-    }
-    .card {
-        background-color: #1e293b;
-        padding: 30px;
-        border-radius: 15px;
-        border: 1px solid #334155;
-        color: #e2e8f0;
-    }
-    .card h3 {
-        color: #38bdf8;
-        margin-top: 0;
-    }
-    .modal-overlay {
+    .modal {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        display: flex;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(20px);
+        display: none;
         justify-content: center;
         align-items: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
+        z-index: 1000;
     }
-    .modal-active {
-        opacity: 1;
-        pointer-events: auto;
-    }
-    .form-box {
-        background: #1e293b;
-        padding: 40px;
-        border-radius: 20px;
+    .modal-content {
         width: 100%;
         max-width: 400px;
+        padding: 40px;
         text-align: center;
-        border: 1px solid #38bdf8;
     }
-    .form-box input {
+    .modal-content h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    .input-field {
         width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        border-radius: 8px;
-        border: 1px solid #334155;
-        background: #0f172a;
-        color: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #d2d2d7;
+        border-radius: 12px;
+        font-size: 1rem;
+        background: #fbfbfd;
         box-sizing: border-box;
+        font-family: var(--system-font);
+    }
+    .input-field:focus {
+        outline: 2px solid #0071e3;
+        border-color: transparent;
     }
 `;
 document.head.appendChild(style);
 
-function createHomePage() {
-    const hero = document.createElement("section");
-    hero.className = "hero-section";
-    
-    const title = document.createElement("h1");
-    title.className = "hero-title";
-    title.textContent = "The Next Generation of Tech Hub";
-    
-    const sub = document.createElement("p");
-    sub.className = "hero-subtitle";
-    sub.textContent = "A gated community for masters of code. Access elite Guru99 tracks, collaborate with high-level developers, and leverage our proprietary AI Environment.";
-    
-    const cta = document.createElement("button");
-    cta.className = "btn-join";
-    cta.textContent = "Request Access Path";
-    
-    hero.appendChild(title);
-    hero.appendChild(sub);
-    hero.appendChild(cta);
+function buildUI() {
+    const nav = document.createElement("nav");
+    nav.className = "navbar";
+    nav.innerHTML = `
+        <div class="logo">TechHub</div>
+        <div class="slot-pill">Available Slots: <span id="slots">50000</span></div>
+    `;
+    app.appendChild(nav);
+
+    const hero = document.createElement("div");
+    hero.className = "hero";
+    hero.innerHTML = `
+        <h1>A Private Space for Builders.</h1>
+        <p>Expert-led programming paths, integrated AI environments, and a network of professionals. All in one clean interface.</p>
+        <button class="btn-primary" id="open-portal">Apply for Membership</button>
+    `;
     app.appendChild(hero);
 
     const grid = document.createElement("div");
-    grid.className = "feature-grid";
+    grid.className = "content-grid";
     
-    const features = [
-        { t: "Guru99 Fast-Track", d: "Compressed industry-grade courses for Python, Java, and DevOps." },
-        { t: "Gated Networking", d: "Zero noise. Only verified developers and serious learners." },
-        { t: "AI Dev Buddy", d: "Your personalized assistant that helps you debug and learn 24/7." }
+    const modules = [
+        { title: "Deep-Dive Curriculum", desc: "Structured, high-intensity paths covering modern backend and frontend engineering." },
+        { title: "AI Integration", desc: "Built-in language models designed to assist in architectural decisions and debugging." },
+        { title: "Professional Network", desc: "A gated environment ensuring high-level collaboration with verified individuals." }
     ];
 
-    features.forEach(f => {
+    modules.forEach(m => {
         const card = document.createElement("div");
-        card.className = "card";
-        const h = document.createElement("h3");
-        h.textContent = f.t;
-        const p = document.createElement("p");
-        p.textContent = f.d;
-        card.appendChild(h);
-        card.appendChild(p);
+        card.className = "info-card";
+        card.innerHTML = `<h3>${m.title}</h3><p>${m.desc}</p>`;
         grid.appendChild(card);
     });
-
     app.appendChild(grid);
 
     const modal = document.createElement("div");
-    modal.className = "modal-overlay";
-    const formBox = document.createElement("div");
-    formBox.className = "form-box";
-    formBox.innerHTML = `
-        <h2 style="color:white">Application Portal</h2>
-        <p style="color:#94a3b8">Entry is limited to 50,000 slots per month.</p>
-        <input type="text" placeholder="Your Tech Handle">
-        <input type="email" placeholder="Professional Email">
-        <input type="password" placeholder="Passkey">
-        <button class="btn-join" style="width:100%">Submit for Approval</button>
+    modal.className = "modal";
+    modal.id = "auth-modal";
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>Access Portal</h2>
+            <input type="text" class="input-field" placeholder="Full Name">
+            <input type="email" class="input-field" placeholder="Email">
+            <input type="password" class="input-field" placeholder="Create Passkey">
+            <button class="btn-primary" style="width:100%">Submit Application</button>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 20px;">Your application will be manually reviewed by an administrator.</p>
+        </div>
     `;
-    modal.appendChild(formBox);
     app.appendChild(modal);
 
-    cta.onclick = () => modal.classList.add("modal-active");
-    modal.onclick = (e) => { if(e.target === modal) modal.classList.remove("modal-active"); };
+    document.getElementById("open-portal").onclick = () => {
+        modal.style.display = "flex";
+    };
+
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
 }
 
-createHomePage();
+buildUI();
